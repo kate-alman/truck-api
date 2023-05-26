@@ -1,0 +1,15 @@
+black==23.1.0
+Django==4.1.6
+djangorestframework==3.14.0
+djangorestframework-jsonapi==6.0.0
+djangorestframework-simplejwt==5.2.2
+django-celery-beat==2.5.0
+djoser==2.2.0
+drf-yasg==1.21.5
+drf-yasg-json-api==0.9.1
+geopy==2.3.0
+pandas==2.0.1
+Pillow==9.5.0
+psycopg2==2.9.2
+psycopg2-binary==2.9.5
+python-dotenv==1.0.0

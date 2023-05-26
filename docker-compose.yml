@@ -1,0 +1,48 @@
+version: "3"
+
+services:
+  web:
+    build: ./
+    command: >
+      sh -c "python manage.py collectstatic --noinput &&
+             python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+    volumes:
+      - ./:/app/
+    ports:
+      - "8000:8000"
+    env_file:
+      - .env
+    depends_on:
+      - db
+  db:
+    image: postgres:14
+    env_file:
+      - .env
+    ports:
+      - "5432"
+    volumes:
+      - ./postgresql/data:/var/lib/postgresql/data
+    restart: always
+  rabbit_mq:
+    restart: always
+    image: rabbitmq:3-management
+    hostname: rabbit
+    env_file:
+      - .env
+    ports:
+      - "5682:5672"
+      - "15682:15672"
+  celery:
+    build: ./
+    command: >
+      sh -c "celery -A truck_api worker -l info --beat -s /logs/celerybeat-schedule"
+    restart: on-failure
+    depends_on:
+      - rabbit_mq
+      - web
+      - db
+
+
+volumes:
+  postgres_data:
