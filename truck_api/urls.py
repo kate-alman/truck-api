@@ -20,7 +20,7 @@ from django.urls import path, include, re_path
 from django.views.defaults import page_not_found
 from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
-from rest_framework.permissions import IsAuthenticated
+from rest_framework.permissions import IsAuthenticated, IsAuthenticatedOrReadOnly
 
 from truck_api import settings
 from truck_app.swagger_generator import CustomOpenAPISchemaGenerator
@@ -33,7 +33,7 @@ schema_view = get_schema_view(
         contact=openapi.Contact(email="ekaterina.aman@syandex.ru"),
     ),
     public=True,
-    permission_classes=[IsAuthenticated, ],
+    permission_classes=[IsAuthenticatedOrReadOnly, ],
     generator_class=CustomOpenAPISchemaGenerator,
 )
 
